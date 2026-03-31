@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --cyan:    #0c9282;
+    --red:     #e05252;
+    --green:   #4caf7d;
+    --yellow:  #e0a030;
+    --bg:      #050505;
+    --surface: rgba(255,255,255,0.03);
+    --border:  #1e1e1e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: radial-gradient(circle at 50% -20%, #1a1a1a, var(--bg));
+    color: #e0e0e0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.wrap { width: 100%; max-width: 960px; }
+
+/* ── Header ── */
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cyan);
+    text-align: center;
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+.subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 0.68rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+/* ── Card ── */
+.card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px;
+    background: #0d0d0d;
+    margin-bottom: 28px;
+}
+.card-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--cyan);
+    font-size: 1.15rem;
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Form ── */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group.full { grid-column: 1 / -1; }
+
+label {
+    color: var(--cyan);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.hint { color: #444; font-size: 0.68rem; }
+
+input[type="number"],
+textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #2a2a2a;
+    padding: 11px 14px;
+    color: #e0e0e0;
+    border-radius: 5px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+}
+input[type="number"]:focus,
+textarea:focus {
+    border-color: var(--cyan);
+    background: rgba(12,146,130,0.07);
+}
+textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--cyan);
+    color: #000;
+    border: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    margin-top: 22px;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.btn:hover { background: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+
+/* ── Verdict badge ── */
+.badge {
+    display: inline-block;
+    padding: 9px 26px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+.badge-low  { background: rgba(224,82,82,.12);  border: 1px solid var(--red);   color: var(--red); }
+.badge-good { background: rgba(76,175,125,.12); border: 1px solid var(--green); color: var(--green); }
+
+/* ── Reason / issue cards ── */
+.reason-card {
+    background: var(--surface);
+    border-left: 3px solid var(--red);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+}
+.reason-card.warn { border-left-color: var(--yellow); }
+.reason-card .label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    margin-bottom: 5px;
+}
+.reason-card .body { font-size: 0.88rem; color: #ccc; margin-bottom: 8px; }
+.reason-card .fix  { font-size: 0.82rem; color: var(--cyan); }
+
+/* ── Description score bar ── */
+.score-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+.score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    min-width: 60px;
+}
+.score-num.high   { color: var(--green); }
+.score-num.medium { color: var(--yellow); }
+.score-num.low    { color: var(--red); }
+
+.bar-wrap { flex: 1; background: #1a1a1a; border-radius: 6px; height: 8px; overflow: hidden; }
+.bar-fill  { height: 100%; border-radius: 6px; transition: width 0.4s; }
+.bar-high   { background: var(--green); }
+.bar-medium { background: var(--yellow); }
+.bar-low    { background: var(--red); }
+
+.meta-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.meta-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.78rem;
+    color: #888;
+}
+.meta-chip span { color: #ddd; font-weight: 600; }
+
+/* ── Missing features pills ── */
+.missing-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    margin: 20px 0 10px;
+}
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+    background: rgba(224,160,48,.1);
+    border: 1px solid rgba(224,160,48,.3);
+    color: var(--yellow);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.78rem;
+}
+
+/* ── Good sales note ── */
+.good-note { color: #666; font-size: 0.88rem; margin-top: 8px; }
+
+@media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .input-group.full { grid-column: 1; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <h1>Product ANALYTICS</h1>
+    <div class="subtitle">Elite Product Diagnostics</div>
+
+    <!-- ── Input Form ──────────────────────────────────────────────────── -->
+    <div class="card">
+        <div class="card-title">Product Details</div>
+        <form method="POST" action="/">
+            <div class="form-grid">
+
+                <div class="input-group">
+                    <label>Discounted Price (₹)</label>
+                    <input type="number" name="discounted_price" step="0.01"
+                           placeholder="e.g. 499"
+                           value="{{ request.form.discounted_price if request.form else '' }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Actual / MRP (₹)</label>
+                    <input type="number" name="actual_price" step="0.01"
+                           placeholder="e.g. 999"
+                           value="{{ request.form.actual_price if request.form else '' }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Discount %</label>
+                    <input type="number" name="discount_percentage" step="0.01"
+                           placeholder="e.g. 50"
+                           value="{{ request.form.discount_percentage if request.form else '' }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Rating (0 – 5)</label>
+                    <input type="number" name="rating" step="0.1" min="0" max="5"
+                           placeholder="e.g. 3.8"
+                           value="{{ request.form.rating if request.form else '' }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Absolute Discount (₹)</label>
+                    <input type="number" name="discount" step="0.01"
+                           placeholder="e.g. 500"
+                           value="{{ request.form.discount if request.form else '' }}" required>
+                    <span class="hint">MRP − Selling Price</span>
+                </div>
+
+                <div class="input-group">
+                    <label>Price Difference (₹)</label>
+                    <input type="number" name="price_diff" step="0.01"
+                           placeholder="e.g. 500"
+                           value="{{ request.form.price_diff if request.form else '' }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Review Sentiment (−1 to 1)</label>
+                    <input type="number" name="review_sentiment" step="0.01" min="-1" max="1"
+                           placeholder="e.g. 0.2"
+                           value="{{ request.form.review_sentiment if request.form else '' }}" required>
+                    <span class="hint">Negative → 0 → Positive</span>
+                </div>
+
+                <!-- Description takes the full width row -->
+                <div class="input-group full">
+                    <label>Product Description</label>
+                    <textarea name="description"
+                              placeholder="Paste or type your product listing description here…">{{ description if description else '' }}</textarea>
+                    <span class="hint">Description length is computed automatically — no need to enter it separately.</span>
+                </div>
+
+            </div>
+            <button type="submit" class="btn">Run Diagnostic</button>
+        </form>
+    </div>
+
+    {% if prediction %}
+
+    <!-- ── ML Prediction ──────────────────────────────────────────────── -->
+    <div class="card">
+        <div class="card-title">Sales Prediction</div>
+
+        <div class="badge {{ 'badge-low' if prediction == 'Low Selling' else 'badge-good' }}">
+            {{ prediction }}
+        </div>
+
+        {% if prediction == 'Low Selling' and shap_reasons %}
+            <p style="font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:#444;margin-bottom:16px;">
+                Top 3 pricing &amp; rating factors
+            </p>
+            {% for reason, sug in zip(shap_reasons, shap_suggestions) %}
+            <div class="reason-card">
+                <div class="label">Why it's low-selling</div>
+                <div class="body">⚠ {{ reason }}</div>
+                <div class="fix">→ {{ sug }}</div>
+            </div>
+            {% endfor %}
+        {% elif prediction == 'Good Sales' %}
+            <p class="good-note">Pricing, rating and discount signals look healthy. Keep monitoring performance.</p>
+        {% endif %}
+    </div>
+
+    <!-- ── Description Analysis ───────────────────────────────────────── -->
+    {% if desc_analysis %}
+    <div class="card">
+        <div class="card-title">Description Analysis</div>
+
+        {% set score = desc_analysis.score %}
+        {% set score_class = 'high' if score >= 70 else ('medium' if score >= 40 else 'low') %}
+        {% set bar_class   = 'bar-high' if score >= 70 else ('bar-medium' if score >= 40 else 'bar-low') %}
+
+        <!-- Score bar -->
+        <div class="score-row">
+            <div class="score-num {{ score_class }}">{{ score }}</div>
+            <div>
+                <div style="font-size:.75rem;color:#555;margin-bottom:6px;">Description Quality Score</div>
+                <div class="bar-wrap" style="width:260px;">
+                    <div class="bar-fill {{ bar_class }}" style="width:{{ score }}%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meta chips -->
+        <div class="meta-row">
+            <div class="meta-chip">Words: <span>{{ desc_analysis.word_count }}</span></div>
+            <div class="meta-chip">Tone: <span>{{ desc_analysis.tone }}</span></div>
+        </div>
+
+        <!-- Issues & fixes -->
+        {% if desc_analysis.issues %}
+        <p style="font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:#444;margin-bottom:14px;">
+            Issues found in your description
+        </p>
+        {% for issue, sug in zip(desc_analysis.issues, desc_analysis.suggestions) %}
+        <div class="reason-card warn">
+            <div class="label">Description issue</div>
+            <div class="body">⚠ {{ issue }}</div>
+            <div class="fix">→ {{ sug }}</div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Missing elements pills -->
+        {% if desc_analysis.features_to_add %}
+        <div class="missing-title">💡 Add these to your description</div>
+        <div class="pill-row">
+            {% for item in desc_analysis.features_to_add %}
+            <div class="pill">+ {{ item }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if not desc_analysis.issues %}
+        <p style="color:var(--green);font-size:.88rem;margin-top:8px;">
+            ✓ Description looks solid — no major issues found.
+        </p>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+</div>
+</body>
+</html>
