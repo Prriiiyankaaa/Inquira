@@ -31,7 +31,7 @@ FEATURES = [
     "review_sentiment",
 ]
 
-# Human-readable label for each feature
+
 _LABELS = {
     "discounted_price":   "Discounted Price",
     "actual_price":       "Actual / MRP",
@@ -99,17 +99,16 @@ _SUGGESTION = {
     "desc_length":         "Rewrite the description: aim for 80–120 words, lead with the top 3 benefits, and add bullet points.",
     "review_sentiment":    "Reply to negative reviews publicly, and send a post-purchase email asking satisfied customers for feedback.",
 }
-
-# ── Load pipeline once ────────────────────────────────────────────────────────
+#loading pipeline
 _pipeline = joblib.load(os.path.join(_HERE, "pipeline.pkl"))
 _scaler   = _pipeline.named_steps["scaler"]
 _rf       = _pipeline.named_steps["rf"]
 
-# Build TreeExplainer once (uses all trees; fast at inference)
+
 _explainer = shap.TreeExplainer(_rf)
 
 
-# ── Public function ───────────────────────────────────────────────────────────
+
 def explain_prediction(df: pd.DataFrame):
     """
     Parameters
