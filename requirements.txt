@@ -1,0 +1,10 @@
+flask
+pandas
+numpy
+matplotlib
+seaborn
+textblob
+scikit-learn
+shap
+joblib
+gensim

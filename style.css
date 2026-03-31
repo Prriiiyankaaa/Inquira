@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #070b1a;
+  color: #f2f2f2;
+  padding: 40px 80px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.reg-id {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 60px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff6ec7, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #cfcfcf;
+  max-width: 600px;
+  margin: auto;
+}
+
+/* GRID SECTION */
+.grid-section {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 100px;
+}
+
+.card {
+  background: #11162a;
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #ff6ec7;
+}
+
+.big {
+  flex: 1.5;
+}
+
+.side-cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.small h3 {
+  margin-bottom: 10px;
+  color: #ff6ec7;
+}
+
+.pink {
+  border: 1px solid #a855f7;
+}
+
+/* SECTION TITLES */
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 50px;
+  background: linear-gradient(90deg, #ff6ec7, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* METHODOLOGY */
+.method-grid {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 100px;
+}
+
+.method {
+  flex: 1;
+  text-align: center;
+}
+
+.highlight {
+  border: 1px solid #ff6ec7;
+}
+
+.highlight button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #ff6ec7, #a855f7);
+  color: white;
+  cursor: pointer;
+}
+
+/* RESULTS */
+.results {
+  margin-bottom: 100px;
+}
+
+.result-box {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.chart-placeholder {
+  width: 300px;
+  height: 250px;
+  background: #1a2038;
+  border-radius: 20px;
+}
+
+.accuracy span {
+  font-size: 40px;
+  font-weight: 600;
+  color: #ff6ec7;
+}
+
+/* CREDITS */
+.credit-grid {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.credit {
+  text-align: center;
+  width: 250px;
+}
+
+.credit h4 {
+  color: #a855f7;
+  margin-bottom: 10px;
+}
+
+.credit span {
+  font-size: 14px;
+  color: #aaa;
+}
