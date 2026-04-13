@@ -77,9 +77,9 @@ _REASON = {
         f"A small price gap (₹{v:.0f}) gives buyers confidence the deal is genuine."
     ),
     "desc_length":         lambda s, v: (
-        f"The description is only {v:.0f} words — too thin to convey value and build buyer confidence."
-        if s > 0 else
-        f"A {v:.0f}-word description may be overwhelming; consider making it more concise."
+        (f"The description is only {v:.0f} words — too thin to convey value and build buyer confidence."
+        if v < 80 else
+         f"The description is {v:.0f} words — too long; trim it to 80–150 words so buyers don't lose interest.")
     ),
     "review_sentiment":    lambda s, v: (
         f"Review sentiment ({v:.2f}) skews negative, signalling poor post-purchase experience."
@@ -96,7 +96,13 @@ _SUGGESTION = {
     "rating":              "Address the top complaints in 1-star reviews and follow up with buyers to improve the rating above 4.0.",
     "discount":            "Offer a minimum ₹200–300 flat discount or add a 'Limited Deal' badge to increase urgency.",
     "price_diff":          "Align MRP and selling price more honestly; inflated strikethrough prices reduce buyer trust.",
-    "desc_length":         "Rewrite the description: aim for 80–120 words, lead with the top 3 benefits, and add bullet points.",
+    "desc_length":         lambda s, v: (
+        ("Expand the description: aim for 80–150 words, lead with the top 3 benefits, and add bullet points."
+         if v < 80 else
+         "Trim the description to under 150 words. Lead with the most important benefits first.")
+        if s > 0 else
+        "Description length is fine — focus on other factors."
+    ),
     "review_sentiment":    "Reply to negative reviews publicly, and send a post-purchase email asking satisfied customers for feedback.",
 }
 #loading pipeline
