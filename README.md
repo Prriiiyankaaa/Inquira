@@ -1,6 +1,6 @@
 # Inquira 🔍
 
-**Inquira** is an AI-powered Amazon product sales predictor built with Flask. It analyzes product pricing, discount metrics, review sentiment, and product descriptions to predict whether a product will have **Good Sales** or **Low Selling** performance — and if underperforming, explains *why* using SHAP and gives actionable suggestions to improve.
+**Inquira** is an AI-powered product sales predictor built with Flask. It analyzes product pricing, discount metrics, review sentiment, and product descriptions to predict whether a product will have **Good Sales** or **Low Selling** performance — and if underperforming, explains *why* using SHAP and gives actionable suggestions to improve.
 
 ---
 
