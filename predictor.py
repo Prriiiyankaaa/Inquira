@@ -1,9 +1,4 @@
-"""
-predictor.py
-------------
-Loads the saved pipeline and exposes a single `predict(data)` function.
-Accepts a dict of 8 raw product features; returns 0 (Good Sales) or 1 (Low Selling).
-"""
+
 
 import os
 import joblib
@@ -27,24 +22,16 @@ FEATURES = [
 _pipeline = joblib.load(os.path.join(_HERE, "pipeline.pkl"))
 
 
-def predict(data: dict) -> int:
-    """
-    Parameters
-    ----------
-    data : dict
-        Must contain all 8 keys listed in FEATURES.
+def predict(data: dict) -> float:
 
-    Returns
-    -------
-    int
-        1 → Low Selling   |   0 → Good Sales
-    """
     df = pd.DataFrame([data])[FEATURES]
-    return int(_pipeline.predict(df)[0])
+
+    # Continuous sales score prediction
+    return float(_pipeline.predict(df)[0])
 
 
-# ── Quick smoke-test ──────────────────────────────────────────────────────────
 if __name__ == "__main__":
+
     sample = {
         "discounted_price":   499,
         "actual_price":       999,
@@ -55,6 +42,16 @@ if __name__ == "__main__":
         "desc_length":         80,
         "review_sentiment":    0.2,
     }
+
     result = predict(sample)
-    label  = "Low Selling" if result == 1 else "Good Sales"
-    print(f"Prediction: {result}  →  {label}")
+
+    
+    if result < 40:
+        label = "Low Selling"
+    elif result < 70:
+        label = "Moderate Sales"
+    else:
+        label = "High Sales"
+
+    print(f"Sales Score Prediction: {result:.2f}")
+    print(f"Category: {label}")
